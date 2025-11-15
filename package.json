@@ -1,6 +1,6 @@
 {
   "name": "@paulo.sigrist/n8n-nodes-espn-api",
-  "version": "0.0.1-rc2",
+  "version": "0.0.1-rc4",
   "description": "n8n node to consume ESPN Public API",
   "license": "MIT",
   "homepage": "https://github.com/sigrist/n8n-espn-api",
@@ -22,7 +22,8 @@
     "prepublishOnly": "npm run build && npm run lint"
   },
   "files": [
-    "dist"
+    "dist",
+    "index.js"
   ],
   "n8n": {
     "n8nNodesApiVersion": 1,
