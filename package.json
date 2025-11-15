@@ -1,6 +1,6 @@
 {
   "name": "@paulo.sigrist/n8n-nodes-espn-api",
-  "version": "0.0.1-rc4",
+  "version": "0.0.1-rc5",
   "description": "n8n node to consume ESPN Public API",
   "license": "MIT",
   "homepage": "https://github.com/sigrist/n8n-espn-api",
