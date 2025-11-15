@@ -22,8 +22,7 @@
     "prepublishOnly": "npm run build && npm run lint"
   },
   "files": [
-    "dist",
-    "index.js"
+    "dist"
   ],
   "n8n": {
     "n8nNodesApiVersion": 1,
