@@ -7,7 +7,18 @@ import {
 	NodeOperationError,
 } from 'n8n-workflow';
 
-import { OptionsWithUri } from 'request';
+function getSportPath(resource: string): string {
+	const sportPaths: { [key: string]: string } = {
+		nfl: 'football/nfl',
+		nba: 'basketball/nba',
+		mlb: 'baseball/mlb',
+		nhl: 'hockey/nhl',
+		collegefootball: 'football/college-football',
+		collegebasketball: 'basketball/mens-college-basketball',
+	};
+
+	return sportPaths[resource] || resource;
+}
 
 export class EspnApi implements INodeType {
 	description: INodeTypeDescription = {
@@ -308,7 +319,7 @@ export class EspnApi implements INodeType {
 						const league = this.getNodeParameter('soccerLeague', i) as string;
 						endpoint = `https://site.api.espn.com/apis/site/v2/sports/soccer/${league}/scoreboard`;
 					} else {
-						endpoint = `https://site.api.espn.com/apis/site/v2/sports/${this.getSportPath(resource)}/scoreboard`;
+						endpoint = `https://site.api.espn.com/apis/site/v2/sports/${getSportPath(resource)}/scoreboard`;
 					}
 
 					if (date) {
@@ -322,7 +333,7 @@ export class EspnApi implements INodeType {
 						const league = this.getNodeParameter('soccerLeague', i) as string;
 						endpoint = `https://site.api.espn.com/apis/site/v2/sports/soccer/${league}/teams`;
 					} else {
-						endpoint = `https://site.api.espn.com/apis/site/v2/sports/${this.getSportPath(resource)}/teams`;
+						endpoint = `https://site.api.espn.com/apis/site/v2/sports/${getSportPath(resource)}/teams`;
 					}
 
 					qs.limit = limit;
@@ -333,7 +344,7 @@ export class EspnApi implements INodeType {
 						const league = this.getNodeParameter('soccerLeague', i) as string;
 						endpoint = `https://site.api.espn.com/apis/site/v2/sports/soccer/${league}/teams/${teamId}`;
 					} else {
-						endpoint = `https://site.api.espn.com/apis/site/v2/sports/${this.getSportPath(resource)}/teams/${teamId}`;
+						endpoint = `https://site.api.espn.com/apis/site/v2/sports/${getSportPath(resource)}/teams/${teamId}`;
 					}
 				} else if (operation === 'standings') {
 					const season = this.getNodeParameter('season', i, '') as string;
@@ -342,7 +353,7 @@ export class EspnApi implements INodeType {
 						const league = this.getNodeParameter('soccerLeague', i) as string;
 						endpoint = `https://site.api.espn.com/apis/v2/sports/soccer/${league}/standings`;
 					} else {
-						endpoint = `https://site.api.espn.com/apis/v2/sports/${this.getSportPath(resource)}/standings`;
+						endpoint = `https://site.api.espn.com/apis/v2/sports/${getSportPath(resource)}/standings`;
 					}
 
 					if (season) {
@@ -355,7 +366,7 @@ export class EspnApi implements INodeType {
 						const league = this.getNodeParameter('soccerLeague', i) as string;
 						endpoint = `https://site.api.espn.com/apis/site/v2/sports/soccer/${league}/athletes`;
 					} else {
-						endpoint = `https://site.api.espn.com/apis/site/v2/sports/${this.getSportPath(resource)}/athletes`;
+						endpoint = `https://site.api.espn.com/apis/site/v2/sports/${getSportPath(resource)}/athletes`;
 					}
 
 					qs.limit = limit;
@@ -366,7 +377,7 @@ export class EspnApi implements INodeType {
 						const league = this.getNodeParameter('soccerLeague', i) as string;
 						endpoint = `https://site.api.espn.com/apis/site/v2/sports/soccer/${league}/athletes/${athleteId}`;
 					} else {
-						endpoint = `https://site.api.espn.com/apis/site/v2/sports/${this.getSportPath(resource)}/athletes/${athleteId}`;
+						endpoint = `https://site.api.espn.com/apis/site/v2/sports/${getSportPath(resource)}/athletes/${athleteId}`;
 					}
 				} else if (operation === 'news') {
 					const limit = this.getNodeParameter('limit', i, 20) as number;
@@ -375,7 +386,7 @@ export class EspnApi implements INodeType {
 						const league = this.getNodeParameter('soccerLeague', i) as string;
 						endpoint = `https://site.api.espn.com/apis/site/v2/sports/soccer/${league}/news`;
 					} else {
-						endpoint = `https://site.api.espn.com/apis/site/v2/sports/${this.getSportPath(resource)}/news`;
+						endpoint = `https://site.api.espn.com/apis/site/v2/sports/${getSportPath(resource)}/news`;
 					}
 
 					qs.limit = limit;
@@ -390,37 +401,24 @@ export class EspnApi implements INodeType {
 					qs.groups = additionalFields.groups;
 				}
 
-				const options: OptionsWithUri = {
+				const responseData = await this.helpers.httpRequest({
 					method: 'GET',
-					uri: endpoint,
+					url: endpoint,
 					qs,
 					json: true,
-				};
+				});
 
-				const responseData = await this.helpers.request(options);
 				returnData.push(responseData as IDataObject);
 			} catch (error) {
 				if (this.continueOnFail()) {
-					returnData.push({ error: error.message });
+					const errorMessage = error instanceof Error ? error.message : String(error);
+					returnData.push({ error: errorMessage });
 					continue;
 				}
-				throw new NodeOperationError(this.getNode(), error);
+				throw new NodeOperationError(this.getNode(), error as Error);
 			}
 		}
 
 		return [this.helpers.returnJsonArray(returnData)];
-	}
-
-	private getSportPath(resource: string): string {
-		const sportPaths: { [key: string]: string } = {
-			nfl: 'football/nfl',
-			nba: 'basketball/nba',
-			mlb: 'baseball/mlb',
-			nhl: 'hockey/nhl',
-			collegefootball: 'football/college-football',
-			collegebasketball: 'basketball/mens-college-basketball',
-		};
-
-		return sportPaths[resource] || resource;
 	}
 }
