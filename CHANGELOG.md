@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.1-rc2] - 2025-11-15
+
+### Fixed
+- Fixed release workflow executing twice (removed 'created' event, kept only 'published')
+- Fixed version mismatch between Git tag and npm package
+- Added automatic version extraction from Git tags to package.json
+- Corrected package.json version from 1.0.0 to 0.0.1-rc2
+
+### Changed
+- Automated release process: pushing a tag now automatically updates package.json and creates GitHub release
+- Auto-detection of pre-release versions based on semver identifiers (alpha, beta, rc, pre, dev)
+
 ## [1.0.0] - 2025-11-15
 
 ### Added

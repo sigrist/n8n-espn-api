@@ -1,21 +1,13 @@
-name: Auto Release
+name: Auto Release on Tag
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version to release (e.g., 1.0.0)'
-        required: true
-        type: string
-      prerelease:
-        description: 'Is this a pre-release?'
-        required: true
-        type: boolean
-        default: false
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   create-release:
-    name: Create GitHub Release
+    name: Create GitHub Release from Tag
     runs-on: ubuntu-latest
 
     permissions:
@@ -24,6 +16,31 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          # Get the tag name (e.g., v0.0.1-rc3)
+          TAG_NAME="${GITHUB_REF#refs/tags/}"
+          # Remove 'v' prefix to get version (e.g., 0.0.1-rc3)
+          VERSION="${TAG_NAME#v}"
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "tag=${TAG_NAME}" >> $GITHUB_OUTPUT
+          echo "Detected version: ${VERSION} from tag: ${TAG_NAME}"
+
+      - name: Determine if pre-release
+        id: prerelease
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          if [[ "$VERSION" =~ (alpha|beta|rc|pre|dev) ]]; then
+            echo "is_prerelease=true" >> $GITHUB_OUTPUT
+            echo "This is a pre-release version"
+          else
+            echo "is_prerelease=false" >> $GITHUB_OUTPUT
+            echo "This is a stable release"
+          fi
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -37,25 +54,26 @@ jobs:
 
       - name: Update version in package.json
         run: |
-          npm version ${{ inputs.version }} --no-git-tag-version
+          npm version ${{ steps.version.outputs.version }} --no-git-tag-version --allow-same-version
           git add package.json
-          git commit -m "chore: bump version to ${{ inputs.version }}"
-          git push
-
-      - name: Create and push tag
-        run: |
-          git tag -a "v${{ inputs.version }}" -m "Release v${{ inputs.version }}"
-          git push origin "v${{ inputs.version }}"
+          git commit -m "chore: bump version to ${{ steps.version.outputs.version }} [skip ci]" || echo "No changes to commit"
+          git push origin HEAD:main || echo "Failed to push to main, continuing..."
 
       - name: Extract changelog for version
         id: changelog
         run: |
-          VERSION="${{ inputs.version }}"
-          # Extract changelog section for this version
-          CHANGELOG=$(sed -n "/## \[${VERSION}\]/,/## \[/p" CHANGELOG.md | sed '$ d')
+          VERSION="${{ steps.version.outputs.version }}"
+          # Try to extract changelog section for this version
+          if [ -f "CHANGELOG.md" ]; then
+            CHANGELOG=$(sed -n "/## \[${VERSION}\]/,/## \[/p" CHANGELOG.md | sed '$ d' || echo "")
+          else
+            CHANGELOG=""
+          fi
+
           if [ -z "$CHANGELOG" ]; then
             CHANGELOG="Release version ${VERSION}"
           fi
+
           # Use multiline output
           echo "notes<<EOF" >> $GITHUB_OUTPUT
           echo "$CHANGELOG" >> $GITHUB_OUTPUT
@@ -66,8 +84,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ inputs.version }}
-          release_name: Release v${{ inputs.version }}
+          tag_name: ${{ steps.version.outputs.tag }}
+          release_name: Release ${{ steps.version.outputs.tag }}
           body: ${{ steps.changelog.outputs.notes }}
           draft: false
-          prerelease: ${{ inputs.prerelease }}
+          prerelease: ${{ steps.prerelease.outputs.is_prerelease }}
