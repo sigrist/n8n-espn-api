@@ -60,6 +60,38 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
    npm install n8n-nodes-espn-api
    ```
 
+### Development Installation
+
+For local development and testing before publishing:
+
+See [INSTALL_DEV.md](INSTALL_DEV.md) for detailed instructions, or use the automated script:
+
+```bash
+git clone https://github.com/sigrist/n8n-espn-api.git
+cd n8n-espn-api
+./install-dev.sh
+```
+
+**Quick start:**
+
+```bash
+# Install dependencies and build
+npm install
+npm run build
+
+# Link to your n8n instance
+npm link
+cd ~/.n8n
+npm link n8n-nodes-espn-api
+n8n start
+```
+
+**Common issue:** If `npm install` shows only 1 package installed, run:
+```bash
+rm -rf node_modules package-lock.json
+npm install
+```
+
 ## Usage Examples
 
 ### Example 1: Get Today's NFL Scores
