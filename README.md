@@ -1,5 +1,10 @@
 # n8n-nodes-espn-api
 
+[![CI](https://github.com/sigrist/n8n-espn-api/actions/workflows/ci.yml/badge.svg)](https://github.com/sigrist/n8n-espn-api/actions/workflows/ci.yml)
+[![Release](https://github.com/sigrist/n8n-espn-api/actions/workflows/release.yml/badge.svg)](https://github.com/sigrist/n8n-espn-api/actions/workflows/release.yml)
+[![npm version](https://badge.fury.io/js/n8n-nodes-espn-api.svg)](https://www.npmjs.com/package/n8n-nodes-espn-api)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 This is an n8n community node that allows you to consume the ESPN Public API in your n8n workflows.
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
@@ -151,6 +156,34 @@ npm run lint
 npm run lintfix  # Auto-fix issues
 ```
 
+### GitHub Actions Workflows
+
+This project uses GitHub Actions for continuous integration and automated releases:
+
+#### CI Workflow
+- **Trigger**: Push to main/develop branches, Pull Requests
+- **Actions**: Lint, build, and test on multiple Node.js versions (18.x, 20.x)
+- **Purpose**: Ensure code quality and compatibility
+
+#### Release Workflow
+- **Trigger**: Creating a GitHub Release
+- **Actions**: Build, lint, publish to npm, upload artifacts
+- **Tags**:
+  - Regular releases → `latest` tag on npm
+  - Pre-releases → `next` tag on npm
+
+#### Build Workflow
+- **Trigger**: Manual dispatch or git tags
+- **Actions**: Build project and create package tarball
+- **Purpose**: On-demand builds for testing
+
+#### Auto Release Workflow
+- **Trigger**: Manual dispatch with version input
+- **Actions**: Update version, create tag and GitHub release
+- **Purpose**: Automated release creation
+
+For detailed information about releases and publishing, see [.github/RELEASE.md](.github/RELEASE.md).
+
 ## Resources
 
 * [n8n community nodes documentation](https://docs.n8n.io/integrations/community-nodes/)
@@ -170,7 +203,19 @@ npm run lintfix  # Auto-fix issues
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please read our [Contributing Guidelines](.github/CONTRIBUTING.md) before submitting a Pull Request.
+
+### Quick Start for Contributors
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run linter and build (`npm run lint && npm run build`)
+5. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+See [CONTRIBUTING.md](.github/CONTRIBUTING.md) for detailed guidelines.
 
 ## Disclaimer
 
