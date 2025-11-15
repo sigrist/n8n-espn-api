@@ -85,14 +85,14 @@ This will:
 - Published to npm with the `latest` tag
 - Semantic version: `x.y.z` (e.g., `1.0.0`)
 - GitHub release is NOT marked as pre-release
-- Users install with: `npm install n8n-nodes-espn-api`
+- Users install with: `npm install @paulo.sigrist/n8n-nodes-espn-api`
 
 ### Pre-release (Beta/RC)
 
 - Published to npm with the `next` tag
 - Semantic version: `x.y.z-beta.n` or `x.y.z-rc.n` (e.g., `1.1.0-beta.1`)
 - GitHub release IS marked as pre-release
-- Users install with: `npm install n8n-nodes-espn-api@next`
+- Users install with: `npm install @paulo.sigrist/n8n-nodes-espn-api@next`
 
 ## Version Numbering
 
@@ -200,7 +200,7 @@ npm version preminor --preid=rc    # 1.0.0 → 1.1.0-rc.0
 - [ ] Create git tag
 - [ ] Create GitHub release
 - [ ] Verify npm publish succeeded
-- [ ] Test installation: `npm install n8n-nodes-espn-api@latest`
+- [ ] Test installation: `npm install @paulo.sigrist/n8n-nodes-espn-api@latest`
 - [ ] Verify package on [npmjs.com](https://www.npmjs.com/package/n8n-nodes-espn-api)
 - [ ] Announce release (if applicable)
 

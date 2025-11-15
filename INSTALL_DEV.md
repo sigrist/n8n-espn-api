@@ -49,7 +49,7 @@ npm link
 
 ```bash
 cd ~/.n8n
-npm link n8n-nodes-espn-api
+npm link @paulo.sigrist/n8n-nodes-espn-api
 ```
 
 ### 4. Reiniciar o N8N
@@ -150,7 +150,7 @@ npm run build
 ```bash
 # Verificar se está instalado
 cd ~/.n8n
-npm list n8n-nodes-espn-api
+npm list @paulo.sigrist/n8n-nodes-espn-api
 
 # Verificar logs do n8n
 n8n start --log-level debug
@@ -167,8 +167,8 @@ npm run build
 
 # Reinstalar no n8n
 cd ~/.n8n
-npm uninstall n8n-nodes-espn-api
-npm link n8n-nodes-espn-api  # ou npm install ~/n8n-espn-api
+npm uninstall @paulo.sigrist/n8n-nodes-espn-api
+npm link @paulo.sigrist/n8n-nodes-espn-api  # ou npm install ~/n8n-espn-api
 ```
 
 ### Mudanças não refletem
@@ -204,7 +204,7 @@ npm install
 
 ```bash
 cd ~/.n8n
-npm unlink n8n-nodes-espn-api
+npm unlink @paulo.sigrist/n8n-nodes-espn-api
 
 cd ~/n8n-espn-api
 npm unlink
@@ -214,7 +214,7 @@ npm unlink
 
 ```bash
 cd ~/.n8n
-npm uninstall n8n-nodes-espn-api
+npm uninstall @paulo.sigrist/n8n-nodes-espn-api
 ```
 
 ## Testando o Node
