@@ -77,7 +77,7 @@ jobs:
           asset_content_type: application/gzip
 
       - name: Upload build artifacts to release
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: dist-${{ steps.package-info.outputs.version }}
           path: dist/
