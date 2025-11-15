@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/sigrist/n8n-espn-api/actions/workflows/ci.yml/badge.svg)](https://github.com/sigrist/n8n-espn-api/actions/workflows/ci.yml)
 [![Release](https://github.com/sigrist/n8n-espn-api/actions/workflows/release.yml/badge.svg)](https://github.com/sigrist/n8n-espn-api/actions/workflows/release.yml)
-[![npm version](https://badge.fury.io/js/n8n-nodes-espn-api.svg)](https://www.npmjs.com/package/n8n-nodes-espn-api)
+[![npm version](https://badge.fury.io/js/%40paulo.sigrist%2Fn8n-nodes-espn-api.svg)](https://www.npmjs.com/package/@paulo.sigrist/n8n-nodes-espn-api)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 This is an n8n community node that allows you to consume the ESPN Public API in your n8n workflows.
@@ -47,7 +47,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 1. Go to **Settings > Community Nodes** in your n8n instance
 2. Click **Install a community node**
-3. Enter `n8n-nodes-espn-api` in the npm Package Name field
+3. Enter `@paulo.sigrist/n8n-nodes-espn-api` in the npm Package Name field
 4. Click **Install**
 
 ### Manual Installation
@@ -57,7 +57,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 3. Go to the custom nodes folder (usually `~/.n8n/custom/`)
 4. Copy the compiled `dist` folder or install via npm:
    ```bash
-   npm install n8n-nodes-espn-api
+   npm install @paulo.sigrist/n8n-nodes-espn-api
    ```
 
 ### Development Installation
@@ -82,7 +82,7 @@ npm run build
 # Link to your n8n instance
 npm link
 cd ~/.n8n
-npm link n8n-nodes-espn-api
+npm link @paulo.sigrist/n8n-nodes-espn-api
 n8n start
 ```
 

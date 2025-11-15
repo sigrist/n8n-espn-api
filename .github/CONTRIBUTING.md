@@ -129,7 +129,7 @@ To test your changes in a local n8n instance:
 2. **In your n8n installation**
    ```bash
    cd ~/.n8n
-   npm link n8n-nodes-espn-api
+   npm link @paulo.sigrist/n8n-nodes-espn-api
    ```
 
 3. **Start n8n**

@@ -15,8 +15,8 @@ if [ ! -f "package.json" ]; then
 fi
 
 # Verificar se o nome do pacote está correto
-if ! grep -q "n8n-nodes-espn-api" package.json; then
-    echo "❌ Erro: package.json não contém n8n-nodes-espn-api"
+if ! grep -q "@paulo.sigrist/n8n-nodes-espn-api" package.json; then
+    echo "❌ Erro: package.json não contém @paulo.sigrist/n8n-nodes-espn-api"
     exit 1
 fi
 
@@ -54,7 +54,7 @@ case $choice in
         echo "✅ Link criado! Agora execute no diretório do N8N:"
         echo ""
         echo "   cd ~/.n8n"
-        echo "   npm link n8n-nodes-espn-api"
+        echo "   npm link @paulo.sigrist/n8n-nodes-espn-api"
         echo "   n8n start"
         echo ""
         ;;
@@ -78,7 +78,7 @@ case $choice in
         echo "   cd $PROJECT_DIR"
         echo "   npm link"
         echo "   cd ~/.n8n"
-        echo "   npm link n8n-nodes-espn-api"
+        echo "   npm link @paulo.sigrist/n8n-nodes-espn-api"
         echo "   n8n start"
         echo ""
         echo "Opção 2 - Instalação local:"
@@ -102,6 +102,6 @@ echo "🎉 Processo concluído!"
 echo ""
 echo "💡 Dicas:"
 echo "   - Após mudanças, rode 'npm run build' e reinicie o n8n"
-echo "   - Para desinstalar: cd ~/.n8n && npm uninstall n8n-nodes-espn-api"
+echo "   - Para desinstalar: cd ~/.n8n && npm uninstall @paulo.sigrist/n8n-nodes-espn-api"
 echo "   - Para ver logs: n8n start --log-level debug"
 echo ""
